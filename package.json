@@ -15,7 +15,7 @@
     "type": "git",
     "url": "ssh://git@github.com:joakimrapp/log-levels.git"
   },
-  "author": "",
+  "author": "Joakim J. Rapp",
   "license": "ISC",
   "bugs": {
     "url": "https://github.com/joakimrapp/log-levels/issues"
