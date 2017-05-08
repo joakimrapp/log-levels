@@ -48,7 +48,7 @@ require( '../../../helpers/unit.js' )( ( levels ) => {} )
 	 		assert.deepEqual( levels.resolveValues( [ 0, 1, 0, 1, 2, 0, 3, 3, 3, 0, 1 ] ), [ 0, 1, 2, 3 ] ) )
 		.done()
 	.describe( 'levels.forEach( fn )' )
-		.it( 'should itterate through all levels', ( assert, levels ) => {
+		.it( 'should iterate through all levels', ( assert, levels ) => {
 			const arr = [];
 			levels.forEach( ( { name, value } ) => arr.push( `(${name}:${value})` ) );
 			assert.equal( arr.join( '' ), '(fatal:0)(error:1)(warning:2)(warn:2)(info:3)(debug:4)(trace:5)(notify:-1)(alert:-2)(alarm:-3)(metric:10)' );
