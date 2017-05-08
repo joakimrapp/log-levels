@@ -33,16 +33,25 @@ require( '../../../helpers/unit.js' )( ( levels ) => {} )
 		.done()
 	.describe( 'levels.resolveValues( args )' )
 		.it( 'should return all values for "*"', ( assert, levels ) =>
-			assert.deepEqual( levels.resolveValues( '*' ), [ 0, 1, 2, 3, 4, 5, -1, -2, -3, 10 ] ) )
+			assert.deepEqual( levels.resolveValues( '*' ), [ -3, -2, -1, 0, 1, 2, 3, 4, 5, 10 ] ) )
 		.it( 'should interpret ! as not', ( assert, levels ) =>
-			assert.deepEqual( levels.resolveValues( [ '*', '!alert' ] ), [ 0, 1, 2, 3, 4, 5, -1, -3, 10 ] ) )
+			assert.deepEqual( levels.resolveValues( [ '*', '!alert' ] ), [ -3, -1, 0, 1, 2, 3, 4, 5, 10 ] ) )
 		.it( 'should interpret < as less than', ( assert, levels ) =>
-			assert.deepEqual( levels.resolveValues( '<2' ), [ 0, 1, -1, -2, -3 ] ) )
+			assert.deepEqual( levels.resolveValues( '<2' ), [ -3, -2, -1, 0, 1 ] ) )
 		.it( 'should interpret !< as not less than', ( assert, levels ) =>
-			assert.deepEqual( levels.resolveValues( [ '*', '!>info' ] ), [ 0, 1, 2, 3, -1, -2, -3 ] ) )
+			assert.deepEqual( levels.resolveValues( [ '*', '!>info' ] ), [ -3, -2, -1, 0, 1, 2, 3 ] ) )
 		.it( 'should interpret fatal to info correct', ( assert, levels ) =>
 			assert.deepEqual( levels.resolveValues( [ '*', '!>info', '!<fatal' ] ), [ 0, 1, 2, 3 ] ) )
 		.it( 'should throw exception if unknown level', ( assert, levels ) =>
 	 		assert.throws( () => levels.resolveValues( 'apa' ) ) )
+		.it( 'should not return duplicate values', ( assert, levels ) =>
+	 		assert.deepEqual( levels.resolveValues( [ 0, 1, 0, 1, 2, 0, 3, 3, 3, 0, 1 ] ), [ 0, 1, 2, 3 ] ) )
+		.done()
+	.describe( 'levels.forEach( fn )' )
+		.it( 'should itterate through all levels', ( assert, levels ) => {
+			const arr = [];
+			levels.forEach( ( { name, value } ) => arr.push( `(${name}:${value})` ) );
+			assert.equal( arr.join( '' ), '(fatal:0)(error:1)(warning:2)(warn:2)(info:3)(debug:4)(trace:5)(notify:-1)(alert:-2)(alarm:-3)(metric:10)' );
+		} )
 		.done()
 	.done();

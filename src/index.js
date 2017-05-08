@@ -7,6 +7,7 @@ const has = ( name ) => names.indexOf( name ) >= 0;
 const value = ( name ) => config.find( ( { names } ) => names.indexOf( name ) >= 0 ).value;
 module.exports = {
 	config, names, values, has, value,
+	forEach: ( fn ) => config.forEach( ( { names, value } ) => names.forEach( name => fn( { name, value } ) ) ),
 	resolveValues: ( args ) => Array.prototype.concat( ...Array.prototype.concat( args )
 			.map( item => item.toString() )
 			.map( item => [ item.charAt( 0 ), item ] )
@@ -37,4 +38,6 @@ module.exports = {
 			} ) )
 		.filter( ( { value: val }, index, arr ) => !arr.some( ( { operator, value } ) => !operator && val === value ) )
 		.map( ( { value } ) => value )
+		.filter( ( value, index, values ) => values.indexOf( value, index + 1 ) < 0 )
+		.sort( ( a, b ) => a - b )
 };
