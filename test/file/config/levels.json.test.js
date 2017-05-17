@@ -1,4 +1,4 @@
-require( '../../../helpers/unit.js' )( ( levels ) =>
+require( '@jrapp/node-project-setup' ).testing.file( './test/file' )( ( levels ) =>
 		( name ) => levels.find( ( { names } ) => names.indexOf( name ) >= 0 ).value )
 	.it( 'should have 9 defined levels', ( assert, levels ) => assert.equal( levels.length, 10 ) )
 	.it( 'should have 10 defined names', ( assert, levels ) =>

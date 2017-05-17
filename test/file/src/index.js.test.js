@@ -1,7 +1,7 @@
-require( '../../../helpers/unit.js' )( ( levels ) => {} )
+require( '@jrapp/node-project-setup' ).testing.file( './test/file' )( ( levels ) => {} )
 	.describe( 'levels.config' )
 		.it( 'should return the config', ( assert, levels ) =>
-	 		assert.deepEqual( levels.config, require( '../../../../config/levels.json' ) ) )
+	 		assert.deepEqual( levels.config, require( '../../../config/levels.json' ) ) )
 		.done()
 	.describe( 'levels.names' )
 		.it( 'should have all 11 names', ( assert, levels ) => assert.deepEqual( levels.names,
